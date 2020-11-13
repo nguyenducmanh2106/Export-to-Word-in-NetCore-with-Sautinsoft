@@ -1,41 +1,30 @@
 ﻿
-<div style="text-align:center" class="source-html">
-    <h1 style="color:blue;font-size:100px">Tiêu đề</h1>
-    <table style="width:1000px">
-        <thead>
-            <tr>
-                <th style="background:yellow;border:1px solid #000000">student Id</th>
-                <th style="background:yellow;border:1px solid #000000">Name</th>
-                <th style="background:yellow;border:1px solid #000000">Roll</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="background:skyblue;border:1px solid #000000">1</td>
-                <td style="background:skyblue;border:1px solid #000000">Shaki 1</td>
-                <td style="background:skyblue;border:1px solid #000000">1001</td>
-            </tr>
-            <tr>
-                <td style="background:skyblue;border:1px solid #000000">2</td>
-                <td style="background:skyblue;border:1px solid #000000">Shak2222i</td>
-                <td style="background:skyblue;border:1px solid #000000">1001</td>
-            </tr>
-            <tr>
-                <td style="background:skyblue;border:1px solid #000000">3</td>
-                <td style="background:skyblue;border:1px solid #000000">Sha3333ki</td>
-                <td style="background:skyblue;border:1px solid #000000">1001</td>
-            </tr>
-            <tr>
-                <td style="background:skyblue;border:1px solid #000000">4</td>
-                <td style="background:skyblue;border:1px solid #000000">Sh4444aki</td>
-                <td style="background:skyblue;border:1px solid #000000">1001</td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-primary" id="xuat-file" >Create Word</button>
-</div>
+<div id="dpl"></div>
+<button class="btn btn-primary" id="xuat-file">Create Word</button>
 <script>
-    document.querySelector("#xuat-file").addEventListener('click', function () {
-        window.location.href="/Home/xuat-file"
+    var urlDomain="/Home"
+
+    $(document).ready(function () {
+        $("#xuat-file").off('click').on('click', function () {
+            xuatFile()
+        })
+        $.ajax({
+            url: `${urlDomain}/list`,
+            method: "GET"
+            , success: function (response) {
+                $('#dpl').html(response);
+            }
+        });
     })
+    function xuatFile() {
+        window.location.href="/Home/xuat-file"
+        //$.ajax({
+        //    url: urlDomain + "/xuat-file",
+        //    method: "get"
+
+        //    , success: function (response) {
+        //        alert(response);
+        //    }
+        //});
+    }
 </script>

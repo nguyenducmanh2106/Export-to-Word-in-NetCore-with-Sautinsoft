@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXmlSDK" Version="2.0.0" />
+    <PackageReference Include="HtmlToOpenXml.dll" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
-    <PackageReference Include="sautinsoft.document" Version="5.0.10.23" />
   </ItemGroup>
 
 </Project>

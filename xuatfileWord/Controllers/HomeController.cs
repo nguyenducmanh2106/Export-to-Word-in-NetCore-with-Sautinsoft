@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SautinSoft.Document;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using xuatfileWord.Models;
-
+using xuatfileWord.Util;
 namespace xuatfileWord.Controllers
 {
     [Route("Home")]
@@ -17,46 +16,29 @@ namespace xuatfileWord.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
-        public HomeController(ILogger<HomeController> logger,IHostingEnvironment hostingEnvironment)
+        public HomeController(ILogger<HomeController> logger, IHostingEnvironment hostingEnvironment)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
         }
-        [HttpGet("Index")]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-        [HttpGet("list")]
-        public IActionResult list()
+        [HttpGet("CreateFileWord")]
+        public async Task<IActionResult> CreateFileWord(string html="")
         {
-            return PartialView("list");
-        }
-       
-        [HttpGet("xuat-file")]
-       public IActionResult FirstProcess(string htmlPage="list")
-        {
-    
-            string rootPath = $"{_hostingEnvironment.ContentRootPath}";
-            string path = $"{rootPath}/Views/Home/{htmlPage}.cshtml";
-            byte[] outputData = null;
-            if (System.IO.File.Exists(path))
+            try
             {
-                byte[] inputFile = System.IO.File.ReadAllBytes(path);    
-                using (MemoryStream memoryStream = new MemoryStream(inputFile))
-                {
-                    DocumentCore document = DocumentCore.Load(memoryStream,new HtmlLoadOptions());
-                   using(MemoryStream ms=new MemoryStream())
-                    {
-                        document.Save(ms, new DocxSaveOptions());
-                        outputData = ms.ToArray();
-                    }
-                }      
+              
+                return File(HtmlToWord.HtmlToWordMethod(html), "application/force-download", "thongkevanban.doc");
             }
-            return File(outputData, "application/force-download", "THONG_KE_KHU_DIEM_CAP_XEP_HANG.docx");
-            
-
+            catch (Exception ex)
+            {
+                return Json("");
+            }
         }
-       
+
     }
 }
